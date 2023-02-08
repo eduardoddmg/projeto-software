@@ -1,1 +1,3 @@
 # projeto-software
+## Tecnologias
+- Java
