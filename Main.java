@@ -3,8 +3,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-
-
 public class Main {
 
 	public static void main(String[] args) {
@@ -41,7 +39,20 @@ public class Main {
 				Long id = Long.valueOf(students.size()+1);
 				
 				Student s = new Student(id, name, cpf, email, score);
-				students.add(s);
+				
+				if (students.size() == 0) {
+					students.add(s);
+				} else {
+					Student testStudent = students.get(students.size()-1);
+					if (testStudent.getScore() > s.getScore()) {
+						students.remove(students.size()-1);
+						students.add(s);
+						students.add(testStudent);
+					} else {
+						students.add(s);
+					}
+				}
+				
 				
 				System.out.println("New student created with success!" + s);
 				
@@ -175,20 +186,11 @@ public class Main {
 				
 			} else if (choice == 7) {
 				System.out.println("Thats the ranking of the students biased on their score: ");
-				List<Student> ranking = new ArrayList();
 				
-				for (int i = 0; i < students.size(); i++) {
-					for (int j = 0; j < students.size()-1; j++) {
-						if (students.get(j).getScore() > students.get(j + 1).getScore()) {
-							Student aux = students.get(j);
-							students.set(j, students.get(j+1));
-							students.set(j+1, aux);
-						}
-					}
-				}
-				
+				int rank = 1;
 				for (int i = students.size()-1; i >= 0; i--) {
-					System.out.println(i + " - " + ranking.get(i).getName() + " with score -> " + ranking.get(i).getScore());
+					System.out.println(rank + " - " + students.get(i).getName() + " with score -> " + students.get(i).getScore());
+					rank++;
 				}
 			}
 			else if (choice == 99) {
